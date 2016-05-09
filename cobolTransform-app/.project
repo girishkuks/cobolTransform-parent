@@ -4,7 +4,6 @@
 	<comment></comment>
 	<projects>
 		<project>cobolTransform-lib</project>
-		<project>cobolTransform-appJava</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

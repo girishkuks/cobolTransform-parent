@@ -4,10 +4,6 @@
 package com.anz.flow.test;
 
 import static org.junit.Assert.assertEquals;
-
-
-
-
 import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
@@ -27,21 +23,17 @@ import org.junit.Test;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
-import com.anz.cobolTransform.transform.pojo.NumbersInput;
-import com.anz.cobolTransform.transform.pojo.Result;
-import com.anz.common.dataaccess.models.iib.Operation;
+import com.anz.cobolTransform.transform.pojo.CustomerName;
+import com.anz.cobolTransform.transform.pojo.PurchaseData;
+import com.anz.common.error.ExceptionMessage;
 import com.anz.common.test.FlowTest;
 import com.anz.common.transform.TransformUtils;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.ibm.broker.config.proxy.ApplicationProxy;
 import com.ibm.broker.config.proxy.AttributeConstants;
-import com.ibm.broker.config.proxy.BrokerProxy;
 import com.ibm.broker.config.proxy.ConfigManagerProxyLoggedException;
 import com.ibm.broker.config.proxy.ConfigManagerProxyPropertyNotInitializedException;
 import com.ibm.broker.config.proxy.ExecutionGroupProxy;
-import com.ibm.broker.config.proxy.FlowProxy;
 import com.ibm.broker.config.proxy.MessageFlowProxy;
 import com.ibm.broker.config.proxy.RecordedTestData;
 
@@ -106,43 +98,65 @@ public class cobolTransformFlowTest extends FlowTest {
 		injectData();
 		
 		//Test individual node outputs
-		logger.info("Testing pre transform...");
+		testHttpInput();
 		testPreTransformNodeOutput();
-		logger.info("Testing post transform...");
-		testPostTransformNodeOutput();
+		testResponseOnQueue();
+		testPostTransformOutput();
 		
 
+	}
+	
+	public void testHttpInput() throws ConfigManagerProxyPropertyNotInitializedException, XPathExpressionException, SAXException, IOException, ParserConfigurationException {	
+		
+		// PreTransform Node
+		List<RecordedTestData> dataList = getTestDataList("HTTP Input");
+				
+		String json = getNodeOutputJsonStringFromBlob(dataList.get(0));
+		CustomerName out = gson.fromJson(json, CustomerName.class);
+
+		assertNotNull(out);
+		assertEquals("Deshpande", out.getSurname());
+
+		
 	}
 	
 	
 	public void testPreTransformNodeOutput() throws ConfigManagerProxyPropertyNotInitializedException, XPathExpressionException, SAXException, IOException, ParserConfigurationException {	
 		
 		// PreTransform Node
-		List<RecordedTestData> dataList = getTestDataList("Request Transform");
+		List<RecordedTestData> dataList = getTestDataList("Transform Request");
 		
-		String json = getNodeOutputJsonStringFromBlob(dataList.get(0));
-		NumbersInput out = gson.fromJson(json, NumbersInput.class);
+		Node n = getNodeOutput(dataList.get(0), "/message/DFDL/PurchaseData/CustomerSurname");
+		assertNotNull(n);
 
-		assertNotNull(out);
-		assertEquals(105, out.getLeft());
-		assertEquals(7, out.getRight());
+		assertEquals("Deshpande", n.getTextContent());
 		
 	}
 	
 	
-	public void testPostTransformNodeOutput() throws ConfigManagerProxyPropertyNotInitializedException, XPathExpressionException, SAXException, IOException, ParserConfigurationException, InterruptedException {	
+	public void testResponseOnQueue() throws ConfigManagerProxyPropertyNotInitializedException, XPathExpressionException, SAXException, IOException, ParserConfigurationException, InterruptedException {	
 		
 		// PreTransform Node
-		//List<RecordedTestData> dataList = getTestDataList("Response Transform");
-		List<RecordedTestData> dataList = getTestDataList("HTTP Reply", true);
+		List<RecordedTestData> dataList = getTestDataList("Get Response");
 		
+		Node n = getNodeOutput(dataList.get(0), "/message/DFDL/PurchaseData/CustomerSurname");
+		assertNotNull(n);
+
+		assertEquals("Deshpande", n.getTextContent());
+			
+	}
+	
+	public void testPostTransformOutput() throws ConfigManagerProxyPropertyNotInitializedException, XPathExpressionException, SAXException, IOException, ParserConfigurationException {	
+		
+		// PreTransform Node
+		List<RecordedTestData> dataList = getTestDataList("Transform Response");
+				
 		String json = getNodeOutputJsonStringFromBlob(dataList.get(0));
-		NumbersInput out = gson.fromJson(json, NumbersInput.class);
-		logger.info("left = {}, right = {}", out.getLeft(), out.getRight());
+		PurchaseData out = gson.fromJson(json, PurchaseData.class);
 
 		assertNotNull(out);
-		assertEquals(105, out.getLeft());
-		assertEquals(107, out.getRight());
-			
+		assertEquals("Deshpande", out.getCustomerSurname());
+
+		
 	}
 }

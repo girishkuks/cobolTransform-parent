@@ -4,9 +4,6 @@
 package com.anz.flow.test;
 
 import static org.junit.Assert.assertEquals;
-
-
-
 import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
@@ -23,25 +20,16 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
-import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
-import com.anz.cobolTransform.transform.pojo.NumbersInput;
-import com.anz.cobolTransform.transform.pojo.Result;
-import com.anz.common.dataaccess.models.iib.Operation;
 import com.anz.common.error.ExceptionMessage;
 import com.anz.common.test.FlowTest;
 import com.anz.common.transform.TransformUtils;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.ibm.broker.config.proxy.ApplicationProxy;
 import com.ibm.broker.config.proxy.AttributeConstants;
-import com.ibm.broker.config.proxy.BrokerProxy;
 import com.ibm.broker.config.proxy.ConfigManagerProxyLoggedException;
 import com.ibm.broker.config.proxy.ConfigManagerProxyPropertyNotInitializedException;
-import com.ibm.broker.config.proxy.ExecutionGroupProxy;
-import com.ibm.broker.config.proxy.FlowProxy;
 import com.ibm.broker.config.proxy.MessageFlowProxy;
 import com.ibm.broker.config.proxy.RecordedTestData;
 
@@ -112,7 +100,7 @@ public class cobolTransformFlowFailureTest extends FlowTest {
 	public void testFailureHandlerSubflowOutput() throws ConfigManagerProxyPropertyNotInitializedException, XPathExpressionException, SAXException, IOException, ParserConfigurationException {	
 		
 		// PreTransform Node
-		List<RecordedTestData> dataList = getTestDataList("Failure Handler");
+		List<RecordedTestData> dataList = getTestDataList("HTTP Reply", true);
 				
 		String json = getNodeOutputJsonStringFromBlob(dataList.get(0));
 		ExceptionMessage out = gson.fromJson(json, ExceptionMessage.class);

@@ -54,16 +54,11 @@ public class AddUserDefinedProperties extends CommonJavaCompute {
 				
 		
 		// Set ReplyToQ MQMD field to the UDP replyQueue
-		MbElement replyToQ = outAssembly.getMessage().getRootElement().getFirstElementByPath("/MQMD/ReplyToQ");
-		replyToQ.setValue((String) getUserDefinedAttribute("REPLY_QUEUE"));
+		MbElement replyToQ = ComputeUtils.setElementInTree(getUserDefinedAttribute("REPLY_QUEUE"), outAssembly.getMessage(), "MQMD","ReplyToQ");
 		logger.info("{} = {}", replyToQ.getName(), replyToQ.getValueAsString());
 		
 		// Set the Local Environment MQ output queue parameter to the UDP providerQueue
 		MbElement providerQ = ComputeUtils.setElementInTree(getUserDefinedAttribute("PROVIDER_QUEUE"), outAssembly.getLocalEnvironment(),"Destination", "MQ","DestinationData","queueName");
-		/*MbElement providerQ = outAssembly.getLocalEnvironment().getRootElement().getFirstElementByPath("/Destination")
-				.createElementAsLastChild(MbElement.TYPE_NAME_VALUE, "MQ", "")
-				.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "DestinationData", "")
-				.createElementAsFirstChild(MbElement.TYPE_NAME_VALUE, "queueName", getUserDefinedAttribute("PROVIDER_QUEUE"));*/
 		logger.info("{} = {}", providerQ.getName(), providerQ.getValueAsString());	
 	}
 
