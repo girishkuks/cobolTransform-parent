@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.anz.cobolTransform.error;
+package com.anz.cobolTransform.transform;
 
 import java.math.BigDecimal;
 
