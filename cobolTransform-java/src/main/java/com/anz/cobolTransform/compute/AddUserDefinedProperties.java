@@ -7,6 +7,7 @@ package com.anz.cobolTransform.compute;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.anz.common.compute.ComputeInfo;
 import com.anz.common.compute.TransformType;
 import com.anz.common.compute.impl.CommonJavaCompute;
 import com.anz.common.compute.impl.ComputeUtils;
@@ -66,5 +67,12 @@ public class AddUserDefinedProperties extends CommonJavaCompute {
 	public TransformType getTransformationType() {
 		// TODO Auto-generated method stub
 		return TransformType.HTTP_MQ;
+	}
+
+	@Override
+	public void prepareForTransformation(ComputeInfo metadata,
+			MbMessageAssembly inAssembly, MbMessageAssembly outAssembly) {
+		// TODO Auto-generated method stub
+		
 	}
 }
