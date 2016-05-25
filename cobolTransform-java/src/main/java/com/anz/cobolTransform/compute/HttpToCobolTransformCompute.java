@@ -21,12 +21,12 @@ public class HttpToCobolTransformCompute extends CustomParserTransformCompute<Cu
 
 	@Override
 	public IParser<CustomerName> getInputParser() {
-		return new JsonBlobParser<>(CustomerName.class);
+		return new JsonBlobParser<CustomerName>(CustomerName.class);
 	}
 
 	@Override
 	public IParser<PurchaseData> getOutputParser() {
-		return new JaxbDFDLParser<>(PurchaseData.class);
+		return new JaxbDFDLParser<PurchaseData>(PurchaseData.class);
 	}
 
 	@Override
@@ -34,12 +34,6 @@ public class HttpToCobolTransformCompute extends CustomParserTransformCompute<Cu
 		return new HttpToCobolTransformer();
 	}
 
-	@Override
-	public void prepareForTransformation(ComputeInfo metadata,
-			MbMessageAssembly inAssembly, MbMessageAssembly outAssembly) {
-		// Auto-generated method stub
-		
-	}
 	
 
 }

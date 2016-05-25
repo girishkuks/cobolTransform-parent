@@ -5,6 +5,7 @@ package com.anz.cobolTransform.transform;
 
 import java.math.BigDecimal;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.anz.cobolTransform.transform.pojo.CustomerName;
@@ -22,10 +23,13 @@ import com.anz.common.transform.TransformUtils;
  */
 public class HttpToCobolTransformer implements
 		ITransformer<CustomerName, PurchaseData> {
+	private static final Logger logger = LogManager.getLogger();
 
 	@Override
 	public PurchaseData execute(CustomerName input, Logger appLogger,
 			ComputeInfo metadata) throws Exception {
+		
+		logger.info(input!= null? input.getSurname(): input);
 
 		PurchaseData p = new PurchaseData();
 		if (input == null || input.getSurname() == null) {
