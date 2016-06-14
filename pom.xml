@@ -6,26 +6,13 @@
 
 	<groupId>com.anz.api</groupId>
 	<artifactId>cobolTransform-parent</artifactId>
-	<version>0.0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
 	<properties>
-	<gitUrl>https://github.com/sanketsw/cobolTransform-parent.git</gitUrl>
-	</properties>
-
-	<distributionManagement>
-		<repository>
-			<id>release</id>
-			<url>http://localhost:8081/artifactory/ext-release-local</url>
-			<uniqueVersion>true</uniqueVersion>
-		</repository>
-		<snapshotRepository>
-			<id>snapshot</id>
-			<url>http://localhost:8081/artifactory/ext-snapshot-local</url>
-			<uniqueVersion>true</uniqueVersion>
-		</snapshotRepository>
-	</distributionManagement>
-
+       <scm.url>https://master @10.52.36.21:8443/r/iib/cobolTransform-parent.git</scm.url>
+     </properties>
+ 
 	<scm>
 		<connection>scm:git:${gitUrl}</connection>
 		<developerConnection>scm:git:${gitUrl}</developerConnection>
@@ -36,6 +23,7 @@
 		<module>cobolTransform-lib</module>
 		<module>cobolTransform-app</module>
 		<module>cobolTransform-testjava</module>
+		<module>package</module>
 	</modules>
 	<build>
 		<plugins>
@@ -47,5 +35,18 @@
 		</plugins>
 
 	</build>
+	
+	<distributionManagement>
+                <repository>
+                        <id>release</id>
+                        <url>http://centralrepository.anz.com:8081/artifactory/ext-release-local</url>
+                        <uniqueVersion>true</uniqueVersion>
+                </repository>
+                <snapshotRepository>
+                        <id>snapshot</id>
+                        <url>http://centralrepository.anz.com:8081/artifactory/ext-snapshot-local</url>
+                        <uniqueVersion>true</uniqueVersion>
+                </snapshotRepository>
+    </distributionManagement>
 
 </project>
