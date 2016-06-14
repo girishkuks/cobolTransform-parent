@@ -10,13 +10,14 @@
 	<packaging>pom</packaging>
 	
 	<properties>
-       <scm.url>https://master @10.52.36.21:8443/r/iib/cobolTransform-parent.git</scm.url>
-     </properties>
+       		<scm.url>https://master @10.52.36.21:8443/r/iib/cobolTransform-parent.git</scm.url>
+     	</properties>
  
 	<scm>
-		<connection>scm:git:${gitUrl}</connection>
-		<developerConnection>scm:git:${gitUrl}</developerConnection>
-	</scm>
+    	   <url>scm:git:${scm.url}</url>
+	   <connection>scm:git:${scm.url}</connection>
+	   <developerConnection>scm:git:${scm.url}</developerConnection>
+    	</scm>
 
 	<modules>
 		<module>cobolTransform-java</module>
